@@ -849,6 +849,7 @@ namespace Be.Windows.Forms
 			protected virtual bool PreProcessWmKeyUp_Insert(ref Message m)
 			{
 				_hexBox._insertActive = !_hexBox._insertActive;
+				_hexBox.OnInsertActiveChanged(EventArgs.Empty);
 				return true;
 			}
 
@@ -1275,6 +1276,11 @@ namespace Be.Windows.Forms
 		#endregion
 
 		#region Events
+		/// <summary>
+		/// Occurs, when the value of InsertActive property has changed.
+		/// </summary>
+		[Description("Occurs, when the value of InsertActive property has changed.")]
+		public event EventHandler InsertActiveChanged;
 		/// <summary>
 		/// Occurs, when the value of ReadOnly property has changed.
 		/// </summary>
@@ -1911,7 +1917,7 @@ namespace Be.Windows.Forms
 		/// <summary>
 		/// Gets a value that indicates the current position during Find method execution.
 		/// </summary>
-		[DefaultValue(0), Browsable(false)]
+		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public long CurrentFindingPosition
 		{
 			get 
@@ -1989,6 +1995,8 @@ namespace Be.Windows.Forms
 		/// </summary>
 		public bool CanCut()
 		{
+			if (ReadOnly) 
+				return false;
 			if(_byteProvider == null)
 				return false;
 			if(_selectionLength < 1 || !_byteProvider.SupportsDeleteBytes())
@@ -2041,6 +2049,8 @@ namespace Be.Windows.Forms
 		/// </summary>
 		public bool CanPaste()
 		{
+			if (ReadOnly) return false;
+
 			if(_byteProvider == null || !_byteProvider.SupportsInsertBytes())
 				return false;
 
@@ -2147,15 +2157,20 @@ namespace Be.Windows.Forms
 
 		void PaintLineInfo(Graphics g, long startByte, long endByte)
 		{
-			Brush brush = new SolidBrush(GetDefaultForeColor());
+			// Ensure endByte isn't > length of array.
+			endByte = Math.Min(_byteProvider.Length-1, endByte);
+
+			Color lineInfoColor = (this.LineInfoForeColor != Color.Empty) ? this.LineInfoForeColor : this.ForeColor;
+			Brush brush = new SolidBrush(lineInfoColor); 
+			
 			int maxLine = GetGridBytePoint(endByte-startByte).Y+1;
 
 			for(int i = 0; i < maxLine; i++)
 			{
-				long lastLineByte = startByte + (_iHexMaxHBytes)*i + _iHexMaxHBytes;
+				long firstLineByte = startByte + (_iHexMaxHBytes)*i;
 
 				PointF bytePointF = GetBytePointF(new Point(0, 0+i));
-				string info = lastLineByte.ToString(_hexStringFormat, System.Threading.Thread.CurrentThread.CurrentCulture);
+				string info = firstLineByte.ToString(_hexStringFormat, System.Threading.Thread.CurrentThread.CurrentCulture);
 				int nulls = 8-info.Length;
 				string formattedInfo;
 				if(nulls > -1)
@@ -2656,7 +2671,7 @@ namespace Be.Windows.Forms
 		/// <summary>
 		/// Not used.
 		/// </summary>
-		[DefaultValue(""), Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), EditorBrowsable(EditorBrowsableState.Never), Bindable(false)]
+		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), EditorBrowsable(EditorBrowsableState.Never), Bindable(false)]
 		public override string Text
 		{
 			get
@@ -2783,7 +2798,7 @@ namespace Be.Windows.Forms
 		/// <summary>
 		/// Gets or sets the ByteProvider.
 		/// </summary>
-		[Browsable(false), DefaultValue(null)]
+		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public IByteProvider ByteProvider
 		{
 			get { return _byteProvider; }
@@ -2946,7 +2961,7 @@ namespace Be.Windows.Forms
 		/// <summary>
 		/// Gets and sets the starting point of the bytes selected in the hex box.
 		/// </summary>
-		[Browsable(false), DefaultValue(0)]
+		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public long SelectionStart
 		{
 			get { return _bytePos; }
@@ -2961,7 +2976,7 @@ namespace Be.Windows.Forms
 		/// <summary>
 		/// Gets and sets the number of bytes selected in the hex box.
 		/// </summary>
-		[DefaultValue(0)]
+		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public long SelectionLength
 		{
 			get { return _selectionLength; }
@@ -2973,6 +2988,16 @@ namespace Be.Windows.Forms
 			}
 		} long _selectionLength;
 
+
+		/// <summary>
+		/// Gets or sets the line info color. When this property is null, then ForeColor property is used.
+		/// </summary>
+		[DefaultValue(typeof(Color), "Empty"), Category("Hex"), Description("Gets or sets the line info color. When this property is null, then ForeColor property is used.")]
+		public Color LineInfoForeColor
+		{
+			get { return _lineInfoForeColor; }
+			set { _lineInfoForeColor = value; Invalidate(); }
+		} Color _lineInfoForeColor = Color.Empty;
 
 		/// <summary>
 		/// Gets or sets the background color for the selected bytes.
@@ -3027,7 +3052,7 @@ namespace Be.Windows.Forms
 		/// <summary>
 		/// Gets the number bytes drawn horizontally.
 		/// </summary>
-		[DefaultValue(true), Browsable(false)]
+		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public int HorizontalByteCount
 		{
 			get { return _iHexMaxHBytes; }
@@ -3036,7 +3061,7 @@ namespace Be.Windows.Forms
 		/// <summary>
 		/// Gets the number bytes drawn vertically.
 		/// </summary>
-		[DefaultValue(true), Browsable(false)]
+		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public int VerticalByteCount
 		{
 			get { return _iHexMaxVBytes; }
@@ -3154,7 +3179,6 @@ namespace Be.Windows.Forms
 			}
 		}
 
-		
 		bool VisualStylesEnabled()
 		{
 			OperatingSystem os = Environment.OSVersion;
@@ -3174,6 +3198,16 @@ namespace Be.Windows.Forms
 			}
 
 			return isAppropriateOS && osFeatureThemesPresent && osThemeDLLAvailable && NativeMethods.IsAppThemed() && NativeMethods.IsThemeActive();
+		}
+		
+		/// <summary>
+		/// Raises the InsertActiveChanged event.
+		/// </summary>
+		/// <param name="e">An EventArgs that contains the event data.</param>
+		protected virtual void OnInsertActiveChanged(EventArgs e)
+		{
+			if(InsertActiveChanged != null)
+				InsertActiveChanged(this, e);
 		}
 
 		/// <summary>
