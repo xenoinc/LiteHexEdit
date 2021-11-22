@@ -3,4 +3,4 @@ Software Requirements:
 - .NET Framework 2.0
 
 Developer Requirements:
-- Visual Studio 2008
+- Visual Studio 2010
