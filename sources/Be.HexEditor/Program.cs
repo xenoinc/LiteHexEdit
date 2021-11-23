@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows.Forms;
 using System.Threading;
 using System.Globalization;
@@ -24,6 +24,7 @@ namespace Be.HexEditor
             }
 
             Application.EnableVisualStyles();
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.SetCompatibleTextRenderingDefault(false);
 
             ApplictionForm = new FormHexEditor();
