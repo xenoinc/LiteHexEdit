@@ -13,48 +13,22 @@ namespace Lite.HexEditor.Core
     // DPI at design time
     public const float DpiAtDesign = 96F;
 
+    // New (current) DPI
+    private float _dpiNew = 0;
+
     // Old (previous) DPI
     private float _dpiOld = 0;
 
-    [DefaultValue(0), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public float DpiOld
-    {
-      get { return _dpiOld; }
-      set { _dpiOld = value; }
-    }
-
-    // New (current) DPI
-    private float dpiNew = 0;
-
-    [DefaultValue(0), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public float DpiNew
-    {
-      get { return dpiNew; }
-      set { dpiNew = value; }
-    }
+    private float _factor;
 
     // Flag to set whether this window is being moved by user
     private bool _isBeingMoved = false;
 
-    // Flag to set whether this window will be adjusted later
-    private bool _willBeAdjusted = false;
-
     // Method for adjustment
     private ResizeMethod _method = ResizeMethod.Immediate;
 
-    private enum ResizeMethod
-    {
-      Immediate,
-      Delayed
-    }
-
-    private enum DelayedState
-    {
-      Initial,
-      Waiting,
-      Resized,
-      Aborted
-    }
+    // Flag to set whether this window will be adjusted later
+    private bool _willBeAdjusted = false;
 
     public FormEx()
     {
@@ -67,22 +41,91 @@ namespace Lite.HexEditor.Core
       this.Move += new System.EventHandler(this.MainForm_Move);
     }
 
-    private void MainForm_Load(object sender, EventArgs e)
+    public event EventHandler FactorChanged;
+
+    private enum DelayedState
     {
-      if (!Util.DesignMode)
-        AdjustWindowInitial();
+      Initial,
+      Waiting,
+      Resized,
+      Aborted
     }
 
-    // Adjust location, size and font size of Controls according to new DPI.
-    private void AdjustWindowInitial()
+    private enum ResizeMethod
     {
-      // Hold initial DPI used at loading this window.
-      DpiOld = this.CurrentAutoScaleDimensions.Width;
+      Immediate,
+      Delayed
+    }
 
-      // Check current DPI.
-      DpiNew = GetDpiWindowMonitor();
+    [DefaultValue(0), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public float DpiNew
+    {
+      get => _dpiNew;
+      set => _dpiNew = value;
+    }
 
-      AdjustWindow();
+    [DefaultValue(0), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public float DpiOld
+    {
+      get => _dpiOld;
+      set => _dpiOld = value;
+    }
+
+    [DefaultValue(1), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public float Factor
+    {
+      get => _factor;
+      private set
+      {
+        if (_factor == value)
+          return;
+        _factor = value;
+
+        if (FactorChanged != null)
+          FactorChanged(this, EventArgs.Empty);
+      }
+    }
+
+    protected virtual void AdjustFont(float factor)
+    {
+      if (Util.DesignMode)
+        return;
+
+      var dic = GetChildControlFontSizes(this);
+
+      CoreUtil.ScaleFont(this, factor);
+
+      foreach (var item in dic)
+      {
+        // not affected by parent font?
+        if (item.Key.Font.Size == item.Value)
+        {
+          CoreUtil.ScaleFont(item.Key, factor);
+          continue;
+        }
+      }
+    }
+
+    // Adjust this window.
+    protected virtual void AdjustWindow()
+    {
+      if (Util.DesignMode)
+        return;
+
+      if ((_dpiOld == 0) || (_dpiOld == _dpiNew))
+        return; // Abort.
+
+      float factor = _dpiNew / _dpiOld;
+
+      //MessageBox.Show(string.Format("new{0}, old{1}, factor: {2}", dpiNew, dpiOld, factor));
+
+      _dpiOld = _dpiNew;
+
+      // Adjust location and size of Controls (except location of this window itself).
+      this.Scale(new SizeF(factor, factor));
+
+      // Adjust Font size of Controls.
+      this.AdjustFont(factor);
     }
 
     // Catch window message of DPI change.
@@ -91,7 +134,8 @@ namespace Lite.HexEditor.Core
       base.WndProc(ref m);
 
       // Check if Windows 8.1 or newer and if not, ignore message.
-      if (!IsEightOneOrNewer()) return;
+      if (!IsWin81OrNewer())
+        return;
 
       const int WM_DPICHANGED = 0x02e0; // 0x02E0 from WinUser.h
 
@@ -104,7 +148,7 @@ namespace Lite.HexEditor.Core
         Win32.RECT r = (Win32.RECT)Marshal.PtrToStructure(m.LParam, typeof(Win32.RECT));
 
         // Hold new DPI as target for adjustment.
-        dpiNew = lo;
+        _dpiNew = lo;
 
         switch (_method)
         {
@@ -140,16 +184,143 @@ namespace Lite.HexEditor.Core
       }
     }
 
-    // Detect user began moving this window.
-    private void MainForm_ResizeBegin(object sender, EventArgs e)
+    // Adjust location, size and font size of Controls according to new DPI.
+    private void AdjustWindowInitial()
     {
-      _isBeingMoved = true;
+      // Hold initial DPI used at loading this window.
+      DpiOld = this.CurrentAutoScaleDimensions.Width;
+
+      // Check current DPI.
+      DpiNew = GetDpiWindowMonitor();
+
+      AdjustWindow();
     }
 
-    // Detect user ended moving this window.
-    private void MainForm_ResizeEnd(object sender, EventArgs e)
+    private void FillChildControlFontSizes(Dictionary<Control, float> dic, Control parent)
     {
-      _isBeingMoved = false;
+      foreach (Control child in parent.Controls)
+      {
+        dic.Add(child, child.Font.Size);
+        FillChildControlFontSizes(dic, child);
+      }
+    }
+
+    // Get child Controls in a specified Control.
+    private Dictionary<Control, float> GetChildControlFontSizes(Control parent)
+    {
+      var dic = new Dictionary<Control, float>();
+      FillChildControlFontSizes(dic, parent);
+      return dic;
+    }
+
+    // Get DPI for all monitors by GetDeviceCaps.
+    private float GetDpiDeviceMonitor()
+    {
+      int dpiX = 0;
+      IntPtr screen = IntPtr.Zero;
+
+      try
+      {
+        screen = Win32.GetDC(IntPtr.Zero);
+        dpiX = Win32.GetDeviceCaps(screen, Win32.LOGPIXELSX);
+      }
+      finally
+      {
+        if (screen != IntPtr.Zero)
+        {
+          Win32.ReleaseDC(IntPtr.Zero, screen);
+        }
+      }
+
+      return (float)dpiX;
+    }
+
+    // Get DPI of a specified monitor by GetDpiForMonitor.
+    private float GetDpiSpecifiedMonitor(IntPtr handleMonitor)
+    {
+      // Check if GetDpiForMonitor function is available.
+      if (!IsWin81OrNewer()) return this.CurrentAutoScaleDimensions.Width;
+
+      // Get DPI.
+      uint dpiX = 0;
+      uint dpiY = 0;
+
+      int result = Win32.GetDpiForMonitor(handleMonitor, Win32.Monitor_DPI_Type.MDT_Default, out dpiX, out dpiY);
+
+      if (result != 0) // If not S_OK (= 0)
+      {
+        throw new Exception("Failed to get DPI of monitor containing this window.");
+      }
+
+      return (float)dpiX;
+    }
+
+    // Get DPI of monitor containing this window by GetDpiForMonitor.
+    private float GetDpiWindowMonitor()
+    {
+      // Get handle to this window.
+      IntPtr handleWindow = Process.GetCurrentProcess().MainWindowHandle;
+
+      // Get handle to monitor.
+      IntPtr handleMonitor = Win32.MonitorFromWindow(handleWindow, Win32.MONITOR_DEFAULTTOPRIMARY);
+
+      // Get DPI.
+      return GetDpiSpecifiedMonitor(handleMonitor);
+    }
+
+    // Get OS version in Double.
+    private double GetVersion()
+    {
+      OperatingSystem os = Environment.OSVersion;
+
+      return os.Version.Major + ((double)os.Version.Minor / 10);
+    }
+
+    // Check if OS is Windows 8.1 or newer.
+    private bool IsWin81OrNewer()
+    {
+      // To get this value correctly, it is required to include ID of Windows 8.1 in the manifest file.
+      return (6.3 <= GetVersion());
+    }
+
+    // Check if current location of this window is good for delayed adjustment.
+    private bool IsLocationGood()
+    {
+      if (_dpiOld == 0) return false; // Abort.
+
+      float factor = _dpiNew / _dpiOld;
+
+      // Prepare new rectangle shrinked or expanded sticking Left-Top corner.
+      int widthDiff = (int)(this.ClientSize.Width * factor) - this.ClientSize.Width;
+      int heightDiff = (int)(this.ClientSize.Height * factor) - this.ClientSize.Height;
+
+      Win32.RECT rect = new Win32.RECT()
+      {
+        left = this.Bounds.Left,
+        top = this.Bounds.Top,
+        right = this.Bounds.Right + widthDiff,
+        bottom = this.Bounds.Bottom + heightDiff
+      };
+
+      // Get handle to monitor that has the largest intersection with the rectangle.
+      IntPtr handleMonitor = Win32.MonitorFromRect(ref rect, Win32.MONITOR_DEFAULTTONULL);
+
+      if (handleMonitor != IntPtr.Zero)
+      {
+        // Check if DPI of the monitor matches.
+        if (GetDpiSpecifiedMonitor(handleMonitor) == _dpiNew)
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    private void MainForm_Load(object sender, EventArgs e)
+    {
+      if (!Util.DesignMode)
+        AdjustWindowInitial();
     }
 
     // Detect this window is moved.
@@ -163,14 +334,28 @@ namespace Lite.HexEditor.Core
       }
     }
 
+    // Detect user began moving this window.
+    private void MainForm_ResizeBegin(object sender, EventArgs e)
+    {
+      _isBeingMoved = true;
+    }
+
+    // Detect user ended moving this window.
+    private void MainForm_ResizeEnd(object sender, EventArgs e)
+    {
+      _isBeingMoved = false;
+    }
+
     // Get new location of this window after DPI change.
     private void MoveWindow()
     {
-      if (Util.DesignMode) return;
+      if (Util.DesignMode)
+        return;
 
-      if (_dpiOld == 0) return; // Abort.
+      if (_dpiOld == 0)
+        return; // Abort.
 
-      float factor = dpiNew / _dpiOld;
+      float factor = _dpiNew / _dpiOld;
 
       // Prepare new rectangles shrinked or expanded sticking four corners.
       int widthDiff = (int)(this.ClientSize.Width * factor) - this.ClientSize.Width;
@@ -230,7 +415,7 @@ namespace Lite.HexEditor.Core
           if ((handleLeftTop != IntPtr.Zero) || (handleRightTop != IntPtr.Zero))
           {
             // Check if DPI of the monitor matches.
-            if (GetDpiSpecifiedMonitor(handleMonitor) == dpiNew)
+            if (GetDpiSpecifiedMonitor(handleMonitor) == _dpiNew)
             {
               // Move this window.
               this.Location = new Point(rectBuf.left, rectBuf.top);
@@ -241,192 +426,5 @@ namespace Lite.HexEditor.Core
         }
       }
     }
-
-    // Check if current location of this window is good for delayed adjustment.
-    private bool IsLocationGood()
-    {
-      if (_dpiOld == 0) return false; // Abort.
-
-      float factor = dpiNew / _dpiOld;
-
-      // Prepare new rectangle shrinked or expanded sticking Left-Top corner.
-      int widthDiff = (int)(this.ClientSize.Width * factor) - this.ClientSize.Width;
-      int heightDiff = (int)(this.ClientSize.Height * factor) - this.ClientSize.Height;
-
-      Win32.RECT rect = new Win32.RECT()
-      {
-        left = this.Bounds.Left,
-        top = this.Bounds.Top,
-        right = this.Bounds.Right + widthDiff,
-        bottom = this.Bounds.Bottom + heightDiff
-      };
-
-      // Get handle to monitor that has the largest intersection with the rectangle.
-      IntPtr handleMonitor = Win32.MonitorFromRect(ref rect, Win32.MONITOR_DEFAULTTONULL);
-
-      if (handleMonitor != IntPtr.Zero)
-      {
-        // Check if DPI of the monitor matches.
-        if (GetDpiSpecifiedMonitor(handleMonitor) == dpiNew)
-        {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    private float _factor;
-
-    [DefaultValue(1), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public float Factor
-    {
-      get { return _factor; }
-      private set
-      {
-        if (_factor == value)
-          return;
-        _factor = value;
-
-        if (FactorChanged != null)
-          FactorChanged(this, EventArgs.Empty);
-      }
-    }
-
-    public event EventHandler FactorChanged;
-
-    // Adjust this window.
-    protected virtual void AdjustWindow()
-    {
-      if (Util.DesignMode) return;
-
-      if ((_dpiOld == 0) || (_dpiOld == dpiNew)) return; // Abort.
-
-      float factor = dpiNew / _dpiOld;
-
-      //MessageBox.Show(string.Format("new{0}, old{1}, factor: {2}", dpiNew, dpiOld, factor));
-
-      _dpiOld = dpiNew;
-
-      // Adjust location and size of Controls (except location of this window itself).
-      this.Scale(new SizeF(factor, factor));
-
-      // Adjust Font size of Controls.
-      this.AdjustFont(factor);
-    }
-
-    protected virtual void AdjustFont(float factor)
-    {
-      if (Util.DesignMode) return;
-
-      var dic = GetChildControlFontSizes(this);
-
-      CoreUtil.ScaleFont(this, factor);
-
-      foreach (var item in dic)
-      {
-        // not affected by parent font?
-        if (item.Key.Font.Size == item.Value)
-        {
-          CoreUtil.ScaleFont(item.Key, factor);
-          continue;
-        }
-      }
-    }
-
-    // Get child Controls in a specified Control.
-    private Dictionary<Control, float> GetChildControlFontSizes(Control parent)
-    {
-      var dic = new Dictionary<Control, float>();
-      FillChildControlFontSizes(dic, parent);
-      return dic;
-    }
-
-    private void FillChildControlFontSizes(Dictionary<Control, float> dic, Control parent)
-    {
-      foreach (Control child in parent.Controls)
-      {
-        dic.Add(child, child.Font.Size);
-        FillChildControlFontSizes(dic, child);
-      }
-    }
-
-    #region DPI
-
-    // Get DPI of monitor containing this window by GetDpiForMonitor.
-    private float GetDpiWindowMonitor()
-    {
-      // Get handle to this window.
-      IntPtr handleWindow = Process.GetCurrentProcess().MainWindowHandle;
-
-      // Get handle to monitor.
-      IntPtr handleMonitor = Win32.MonitorFromWindow(handleWindow, Win32.MONITOR_DEFAULTTOPRIMARY);
-
-      // Get DPI.
-      return GetDpiSpecifiedMonitor(handleMonitor);
-    }
-
-    // Get DPI of a specified monitor by GetDpiForMonitor.
-    private float GetDpiSpecifiedMonitor(IntPtr handleMonitor)
-    {
-      // Check if GetDpiForMonitor function is available.
-      if (!IsEightOneOrNewer()) return this.CurrentAutoScaleDimensions.Width;
-
-      // Get DPI.
-      uint dpiX = 0;
-      uint dpiY = 0;
-
-      int result = Win32.GetDpiForMonitor(handleMonitor, Win32.Monitor_DPI_Type.MDT_Default, out dpiX, out dpiY);
-
-      if (result != 0) // If not S_OK (= 0)
-      {
-        throw new Exception("Failed to get DPI of monitor containing this window.");
-      }
-
-      return (float)dpiX;
-    }
-
-    // Get DPI for all monitors by GetDeviceCaps.
-    private float GetDpiDeviceMonitor()
-    {
-      int dpiX = 0;
-      IntPtr screen = IntPtr.Zero;
-
-      try
-      {
-        screen = Win32.GetDC(IntPtr.Zero);
-        dpiX = Win32.GetDeviceCaps(screen, Win32.LOGPIXELSX);
-      }
-      finally
-      {
-        if (screen != IntPtr.Zero)
-        {
-          Win32.ReleaseDC(IntPtr.Zero, screen);
-        }
-      }
-
-      return (float)dpiX;
-    }
-
-    #endregion DPI
-
-    #region OS Version
-
-    // Check if OS is Windows 8.1 or newer.
-    private bool IsEightOneOrNewer()
-    {
-      // To get this value correctly, it is required to include ID of Windows 8.1 in the manifest file.
-      return (6.3 <= GetVersion());
-    }
-
-    // Get OS version in Double.
-    private double GetVersion()
-    {
-      OperatingSystem os = Environment.OSVersion;
-
-      return os.Version.Major + ((double)os.Version.Minor / 10);
-    }
-
-    #endregion OS Version
   }
 }

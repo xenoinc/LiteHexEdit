@@ -10,25 +10,24 @@ namespace Lite.HexEditor
   /// </summary>
   public class UCAbout : System.Windows.Forms.UserControl
   {
+    /// <summary>
+    /// Required designer variable.
+    /// </summary>
+    private System.ComponentModel.Container components = null;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.Label label7;
     private System.Windows.Forms.Label lblAuthor;
     private System.Windows.Forms.Label lblVersion;
-    private System.Windows.Forms.TabPage tabLicense;
-    private System.Windows.Forms.RichTextBox txtLicense;
-    private System.Windows.Forms.TabPage tabChanges;
-    private System.Windows.Forms.RichTextBox txtChanges;
-    private System.Windows.Forms.PictureBox pictureBox1;
     private System.Windows.Forms.LinkLabel lnkWorkspace;
+    private System.Windows.Forms.PictureBox pictureBox1;
+    private System.Windows.Forms.TabPage tabChanges;
     private System.Windows.Forms.TabControl tabControl;
+    private System.Windows.Forms.TabPage tabLicense;
     private System.Windows.Forms.TabPage tabThanksTo;
+    private System.Windows.Forms.RichTextBox txtChanges;
+    private System.Windows.Forms.RichTextBox txtLicense;
     private System.Windows.Forms.RichTextBox txtThanksTo;
-
-    /// <summary> 
-    /// Required designer variable.
-    /// </summary>
-    private System.ComponentModel.Container components = null;
 
     public UCAbout()
     {
@@ -58,13 +57,7 @@ namespace Lite.HexEditor
       }
     }
 
-    protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
-    {
-
-      base.ScaleControl(factor, specified);
-    }
-
-    /// <summary> 
+    /// <summary>
     /// Clean up any resources being used.
     /// </summary>
     protected override void Dispose(bool disposing)
@@ -79,9 +72,15 @@ namespace Lite.HexEditor
       base.Dispose(disposing);
     }
 
+    protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
+    {
+      base.ScaleControl(factor, specified);
+    }
+
     #region Component Designer generated code
-    /// <summary> 
-    /// Required method for Designer support - do not modify 
+
+    /// <summary>
+    /// Required method for Designer support - do not modify
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent()
@@ -107,103 +106,103 @@ namespace Lite.HexEditor
       this.tabChanges.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.SuspendLayout();
-      // 
+      //
       // label1
-      // 
+      //
       resources.ApplyResources(this.label1, "label1");
       this.label1.Name = "label1";
-      // 
+      //
       // lblAuthor
-      // 
+      //
       resources.ApplyResources(this.lblAuthor, "lblAuthor");
       this.lblAuthor.BackColor = System.Drawing.Color.White;
       this.lblAuthor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.lblAuthor.Name = "lblAuthor";
-      // 
+      //
       // lnkWorkspace
-      // 
+      //
       resources.ApplyResources(this.lnkWorkspace, "lnkWorkspace");
       this.lnkWorkspace.BackColor = System.Drawing.Color.White;
       this.lnkWorkspace.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.lnkWorkspace.Name = "lnkWorkspace";
       this.lnkWorkspace.TabStop = true;
       this.lnkWorkspace.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCompany_LinkClicked);
-      // 
+      //
       // label5
-      // 
+      //
       resources.ApplyResources(this.label5, "label5");
       this.label5.Name = "label5";
-      // 
+      //
       // lblVersion
-      // 
+      //
       resources.ApplyResources(this.lblVersion, "lblVersion");
       this.lblVersion.BackColor = System.Drawing.Color.White;
       this.lblVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.lblVersion.Name = "lblVersion";
-      // 
+      //
       // label7
-      // 
+      //
       resources.ApplyResources(this.label7, "label7");
       this.label7.Name = "label7";
-      // 
+      //
       // tabControl
-      // 
+      //
       resources.ApplyResources(this.tabControl, "tabControl");
       this.tabControl.Controls.Add(this.tabThanksTo);
       this.tabControl.Controls.Add(this.tabLicense);
       this.tabControl.Controls.Add(this.tabChanges);
       this.tabControl.Name = "tabControl";
       this.tabControl.SelectedIndex = 0;
-      // 
+      //
       // tabThanksTo
-      // 
+      //
       resources.ApplyResources(this.tabThanksTo, "tabThanksTo");
       this.tabThanksTo.Controls.Add(this.txtThanksTo);
       this.tabThanksTo.Name = "tabThanksTo";
-      // 
+      //
       // txtThanksTo
-      // 
+      //
       this.txtThanksTo.BackColor = System.Drawing.Color.White;
       this.txtThanksTo.BorderStyle = System.Windows.Forms.BorderStyle.None;
       resources.ApplyResources(this.txtThanksTo, "txtThanksTo");
       this.txtThanksTo.Name = "txtThanksTo";
       this.txtThanksTo.ReadOnly = true;
-      // 
+      //
       // tabLicense
-      // 
+      //
       this.tabLicense.Controls.Add(this.txtLicense);
       resources.ApplyResources(this.tabLicense, "tabLicense");
       this.tabLicense.Name = "tabLicense";
-      // 
+      //
       // txtLicense
-      // 
+      //
       this.txtLicense.BackColor = System.Drawing.Color.White;
       this.txtLicense.BorderStyle = System.Windows.Forms.BorderStyle.None;
       resources.ApplyResources(this.txtLicense, "txtLicense");
       this.txtLicense.Name = "txtLicense";
       this.txtLicense.ReadOnly = true;
-      // 
+      //
       // tabChanges
-      // 
+      //
       this.tabChanges.Controls.Add(this.txtChanges);
       resources.ApplyResources(this.tabChanges, "tabChanges");
       this.tabChanges.Name = "tabChanges";
-      // 
+      //
       // txtChanges
-      // 
+      //
       this.txtChanges.BorderStyle = System.Windows.Forms.BorderStyle.None;
       resources.ApplyResources(this.txtChanges, "txtChanges");
       this.txtChanges.Name = "txtChanges";
-      // 
+      //
       // pictureBox1
-      // 
+      //
       this.pictureBox1.Image = global::Lite.HexEditor.images.Logo;
       resources.ApplyResources(this.pictureBox1, "pictureBox1");
       this.pictureBox1.Name = "pictureBox1";
       this.pictureBox1.TabStop = false;
-      // 
+      //
       // UCAbout
-      // 
+      //
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.pictureBox1);
@@ -223,9 +222,9 @@ namespace Lite.HexEditor
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
-
     }
-    #endregion
+
+    #endregion Component Designer generated code
 
     private void lnkCompany_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
     {

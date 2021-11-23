@@ -28,9 +28,9 @@
     <MapFileExtensions>true</MapFileExtensions>
     <SupportUrl>http://sourceforge.net/projects/hexbox/</SupportUrl>
     <ProductName>Lite.HexEditor</ProductName>
-    <PublisherName>Bernhard Elbl</PublisherName>
+    <PublisherName>Xeno Innovations</PublisherName>
     <ApplicationRevision>6</ApplicationRevision>
-    <ApplicationVersion>1.5.0.%2a</ApplicationVersion>
+    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
