@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("Lite.HexEdit")]
+[assembly: AssemblyTitle("Lite.HexEditor")]
 [assembly: AssemblyDescription("View and edit files in hex format")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Xeno Innovations")]
-[assembly: AssemblyProduct("Lite.HexEdit")]
+[assembly: AssemblyProduct("Lite.HexEditor")]
 [assembly: AssemblyCopyright("Xeno Innovations, Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

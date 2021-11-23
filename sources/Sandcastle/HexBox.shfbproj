@@ -30,8 +30,8 @@
     <HelpTitle>Be.Windows.Forms.HexBox API Reference</HelpTitle>
     <PresentationStyle>vs2010</PresentationStyle>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Be.HexEditor\bin\Debug\Be.Windows.Forms.HexBox.dll" />
-      <DocumentationSource sourceFile="..\Be.HexEditor\bin\Debug\Be.Windows.Forms.HexBox.xml" />
+      <DocumentationSource sourceFile="..\..\output\Lite.Controls.HexBox.dll" />
+      <DocumentationSource sourceFile="..\..\output\Lite.Controls.HexBox.xml" />
     </DocumentationSources>
     <MSHelpViewerSdkLinkType>None</MSHelpViewerSdkLinkType>
     <WebsiteSdkLinkType>None</WebsiteSdkLinkType>
