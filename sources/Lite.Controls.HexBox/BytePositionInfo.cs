@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
     /// <summary>
     /// Represents a position in the HexBox control

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
 	/// <summary>
 	/// Byte provider for a small amount of data.

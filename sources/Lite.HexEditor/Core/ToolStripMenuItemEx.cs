@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Be.HexEditor.Core
+namespace Lite.HexEditor.Core
 {
     public class ToolStripMenuItemEx : ToolStripMenuItem, IScalingItem
     {

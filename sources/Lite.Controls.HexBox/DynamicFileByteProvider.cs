@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.IO;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
     /// <summary>
     /// Implements a fully editable byte provider for file data of any size.

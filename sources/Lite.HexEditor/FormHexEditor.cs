@@ -2,9 +2,9 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Be.Windows.Forms;
+using Lite.Windows.Forms;
 
-namespace Be.HexEditor
+namespace Lite.HexEditor
 {
   public partial class FormHexEditor : Core.FormEx
   {

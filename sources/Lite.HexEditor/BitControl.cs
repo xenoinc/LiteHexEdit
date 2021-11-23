@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Be.HexEditor
+namespace Lite.HexEditor
 {
   public partial class BitControl : UserControl
   {
-    List<RichTextBox> _txtBits = new List<RichTextBox>();
+    private Panel _innerBorderHeaderPanel;
+    private Panel _innerBorderPanel;
+    private List<RichTextBox> _txtBits = new List<RichTextBox>();
 
     public event EventHandler BitChanged;
 
@@ -17,10 +19,6 @@ namespace Be.HexEditor
       if (BitChanged != null)
         BitChanged(this, e);
     }
-
-    Panel _innerBorderHeaderPanel;
-
-    Panel _innerBorderPanel;
 
     public BitControl()
     {
@@ -36,7 +34,6 @@ namespace Be.HexEditor
       InitializeComponent();
 
       pnBitsEditor.BackColor = System.Windows.Forms.VisualStyles.VisualStyleInformation.TextControlBorder;
-
 
       pnBitsHeader.Controls.Add(_innerBorderHeaderPanel);
 
@@ -104,7 +101,8 @@ namespace Be.HexEditor
       UpdateView();
     }
 
-    BitInfo _bitInfo;
+    private BitInfo _bitInfo;
+
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public BitInfo BitInfo
     {
@@ -148,7 +146,7 @@ namespace Be.HexEditor
         txt.TextChanged += new EventHandler(txt_TextChanged);
     }
 
-    int GetBitSetInt(byte b, int pos)
+    private int GetBitSetInt(byte b, int pos)
     {
       if (IsBitSet(b, pos))
         return 1;
@@ -156,12 +154,12 @@ namespace Be.HexEditor
         return 0;
     }
 
-    bool IsBitSet(byte b, int pos)
+    private bool IsBitSet(byte b, int pos)
     {
       return (b & (1 << pos)) != 0;
     }
 
-    byte SetBit(byte b, int BitNumber)
+    private byte SetBit(byte b, int BitNumber)
     {
       //Kleine Fehlerbehandlung
       if (BitNumber < 8 && BitNumber > -1)
@@ -175,7 +173,7 @@ namespace Be.HexEditor
       }
     }
 
-    void txt_TextChanged(object sender, EventArgs e)
+    private void txt_TextChanged(object sender, EventArgs e)
     {
       var txt = (RichTextBox)sender;
       var index = (int)txt.Tag;
@@ -186,21 +184,21 @@ namespace Be.HexEditor
       NavigateRight((RichTextBox)sender);
     }
 
-    void NavigateLeft(RichTextBox txt)
+    private void NavigateLeft(RichTextBox txt)
     {
       var indexOf = _txtBits.IndexOf(txt);
 
       NavigateTo(indexOf - 1);
     }
 
-    void NavigateRight(RichTextBox txt)
+    private void NavigateRight(RichTextBox txt)
     {
       var indexOf = _txtBits.IndexOf(txt);
 
       NavigateTo(indexOf + 1);
     }
 
-    void NavigateTo(int indexOf)
+    private void NavigateTo(int indexOf)
     {
       if (indexOf > _txtBits.Count - 1 || indexOf < 0)
         return;
@@ -222,7 +220,7 @@ namespace Be.HexEditor
       selectBox.Focus();
     }
 
-    void txt_KeyDown(object sender, KeyEventArgs e)
+    private void txt_KeyDown(object sender, KeyEventArgs e)
     {
       var txt = (RichTextBox)sender;
 
@@ -244,12 +242,15 @@ namespace Be.HexEditor
           case Keys.Left:
             NavigateLeft(txt);
             break;
+
           case Keys.Right:
             NavigateRight(txt);
             break;
+
           case Keys.Home:
             NavigateTo(0);
             break;
+
           case Keys.End:
             NavigateTo(7);
             break;
@@ -257,20 +258,20 @@ namespace Be.HexEditor
       }
     }
 
-    void txt_SelectionChanged(object sender, EventArgs e)
+    private void txt_SelectionChanged(object sender, EventArgs e)
     {
       var txt = (RichTextBox)sender;
       UpdateSelection(txt);
     }
 
-    void UpdateSelection(RichTextBox txt)
+    private void UpdateSelection(RichTextBox txt)
     {
       txt.SelectionStart = 0;
       if (txt.SelectionLength == 0)
         txt.SelectionLength = 1;
     }
 
-    void txt_Enter(object sender, EventArgs e)
+    private void txt_Enter(object sender, EventArgs e)
     {
       var txt = (RichTextBox)sender;
       UpdateSelection(txt);

@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
 	internal static class NativeMethods
 	{

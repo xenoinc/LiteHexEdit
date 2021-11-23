@@ -5,7 +5,7 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
     /// <summary>
     /// Defines a build-in ContextMenuStrip manager for HexBox control to show Copy, Cut, Paste menu in contextmenu of the control.

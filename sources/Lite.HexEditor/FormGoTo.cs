@@ -4,7 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Be.HexEditor
+namespace Lite.HexEditor
 {
 	/// <summary>
 	/// Summary description for FormGoTo.

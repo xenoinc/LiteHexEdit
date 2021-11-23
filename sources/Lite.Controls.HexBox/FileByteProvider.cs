@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Collections;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
 	/// <summary>
 	/// Byte provider for (big) files.

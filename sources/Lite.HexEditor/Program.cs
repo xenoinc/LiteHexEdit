@@ -2,14 +2,14 @@
 using System.Windows.Forms;
 using System.Threading;
 using System.Globalization;
-using Be.HexEditor.Properties;
-using Be.Windows.Forms;
+using Lite.HexEditor.Properties;
+using Lite.Windows.Forms;
 
-namespace Be.HexEditor
+namespace Lite.HexEditor
 {
     class Program
     {
-        public const string SoftwareName = "Be.HexEditor";
+        public const string SoftwareName = "Lite.HexEditor";
 
         public static FormHexEditor ApplictionForm;
 

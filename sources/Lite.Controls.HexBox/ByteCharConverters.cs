@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
     /// <summary>
     /// The interface for objects that can translate between characters and bytes.

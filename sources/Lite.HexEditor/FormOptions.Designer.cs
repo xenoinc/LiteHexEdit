@@ -1,4 +1,4 @@
-﻿namespace Be.HexEditor
+﻿namespace Lite.HexEditor
 {
     partial class FormOptions
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
 	/// <summary>
 	/// Defines the type of the Find operation.

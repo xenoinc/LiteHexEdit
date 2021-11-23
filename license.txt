@@ -1,8 +1,8 @@
 The MIT License
 
-Copyright for portions of the project Be.HexEditor are held by
+Copyright for portions of the project Lite.HexEditor are held by
 Bernhard Elbl, 2013 as part of project Lite Hex Editor. All other copyright
-for project Be.HexEditer are held by Xeno Innovations, 2021.
+for project Lite.HexEditer are held by Xeno Innovations, 2021.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

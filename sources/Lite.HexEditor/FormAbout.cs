@@ -4,14 +4,14 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Be.HexEditor
+namespace Lite.HexEditor
 {
 	/// <summary>
 	/// Summary description for FormAbout.
 	/// </summary>
 	public class FormAbout : Core.FormEx
 	{
-		private Be.HexEditor.UCAbout ucAbout1;
+		private Lite.HexEditor.UCAbout ucAbout1;
 		private System.Windows.Forms.Button btnOK;
 		/// <summary>
 		/// Required designer variable.
@@ -55,7 +55,7 @@ namespace Be.HexEditor
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAbout));
             this.btnOK = new System.Windows.Forms.Button();
-            this.ucAbout1 = new Be.HexEditor.UCAbout();
+            this.ucAbout1 = new Lite.HexEditor.UCAbout();
             this.SuspendLayout();
             // 
             // btnOK

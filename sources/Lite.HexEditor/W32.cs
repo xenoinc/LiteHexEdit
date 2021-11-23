@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Be.HexEditor
+namespace Lite.HexEditor
 {
     // Win32 API for P/Invoke
     class W32

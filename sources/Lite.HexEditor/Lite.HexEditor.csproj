@@ -5,7 +5,7 @@
     <ApplicationIcon>App.ico</ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
-    <AssemblyOriginatorKeyFile>Be.HexEditor.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Lite.HexEditor.snk</AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -27,7 +27,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <SupportUrl>http://sourceforge.net/projects/hexbox/</SupportUrl>
-    <ProductName>Be.HexEditor</ProductName>
+    <ProductName>Lite.HexEditor</ProductName>
     <PublisherName>Bernhard Elbl</PublisherName>
     <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.5.0.%2a</ApplicationVersion>
@@ -75,7 +75,7 @@
     <ManifestCertificateThumbprint>5282C77035188F0544204E779C3587A1D0FE131C</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Be.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Lite.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>false</GenerateManifests>
@@ -88,6 +88,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <ItemGroup>
     <Reference Update="System">
@@ -118,6 +119,11 @@
     <Compile Update="BitControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Update="RecentFileHandler.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -131,6 +137,10 @@
     </EmbeddedResource>
     <None Update="app.manifest">
       <SubType>Designer</SubType>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

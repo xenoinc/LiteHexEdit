@@ -5,9 +5,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
-using Be.HexEditor.Properties;
+using Lite.HexEditor.Properties;
 
-namespace Be.HexEditor
+namespace Lite.HexEditor
 {
     public partial class RecentFileHandler : Component
     {

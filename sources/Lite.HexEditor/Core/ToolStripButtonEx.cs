@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Be.HexEditor.Core
+namespace Lite.HexEditor.Core
 {
-    public class ToolStripButtonEx : ToolStripButton, Be.HexEditor.Core.IScalingItem
+    public class ToolStripButtonEx : ToolStripButton, Lite.HexEditor.Core.IScalingItem
     {
         public ToolStripButtonEx()
         {

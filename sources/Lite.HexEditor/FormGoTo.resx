@@ -334,6 +334,6 @@
     <value>FormGoTo</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Be.HexEditor.Core.FormEx, Be.HexEditor, Version=1.5.0.25668, Culture=neutral, PublicKeyToken=01fb039ca8b8c445</value>
+    <value>Lite.HexEditor.Core.FormEx, Lite.HexEditor, Version=1.5.0.25668, Culture=neutral, PublicKeyToken=01fb039ca8b8c445</value>
   </data>
 </root>

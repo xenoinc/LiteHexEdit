@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
     /// <summary>
     /// Specifies the case of hex characters in the HexBox control

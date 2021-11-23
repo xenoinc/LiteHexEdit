@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Be.HexEditor.Core
+namespace Lite.HexEditor.Core
 {
     public partial class FormEx : Form
     {

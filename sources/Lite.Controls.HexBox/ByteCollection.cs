@@ -2,7 +2,7 @@ using System;
 
 using System.Collections;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
 	/// <summary>
 	/// Represents a collection of bytes.

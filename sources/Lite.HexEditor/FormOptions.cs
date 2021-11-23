@@ -6,9 +6,9 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
-using Be.HexEditor.Properties;
+using Lite.HexEditor.Properties;
 
-namespace Be.HexEditor
+namespace Lite.HexEditor
 {
     public partial class FormOptions : Core.FormEx
     {

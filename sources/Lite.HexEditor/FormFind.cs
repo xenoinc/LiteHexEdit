@@ -4,18 +4,18 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-using Be.Windows.Forms;
+using Lite.Windows.Forms;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Be.HexEditor
+namespace Lite.HexEditor
 {
 	/// <summary>
 	/// Summary description for FormFind.
 	/// </summary>
     public class FormFind : Core.FormEx
 	{
-		private Be.Windows.Forms.HexBox hexFind;
+		private Lite.Windows.Forms.HexBox hexFind;
 		private System.Windows.Forms.TextBox txtFind;
 		private System.Windows.Forms.RadioButton rbString;
 		private System.Windows.Forms.RadioButton rbHex;
@@ -87,7 +87,7 @@ namespace Be.HexEditor
             this.chkMatchCase = new System.Windows.Forms.CheckBox();
             this.timerPercent = new System.Windows.Forms.Timer(this.components);
             this.timer = new System.Windows.Forms.Timer(this.components);
-            this.hexFind = new Be.Windows.Forms.HexBox();
+            this.hexFind = new Lite.Windows.Forms.HexBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.line = new System.Windows.Forms.Panel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
@@ -164,11 +164,11 @@ namespace Be.HexEditor
             // 
             // 
             // 
-            this.hexFind.BuiltInContextMenu.CopyMenuItemImage = global::Be.HexEditor.images.CopyHS;
+            this.hexFind.BuiltInContextMenu.CopyMenuItemImage = global::Lite.HexEditor.images.CopyHS;
             this.hexFind.BuiltInContextMenu.CopyMenuItemText = resources.GetString("hexFind.BuiltInContextMenu.CopyMenuItemText");
-            this.hexFind.BuiltInContextMenu.CutMenuItemImage = global::Be.HexEditor.images.CutHS;
+            this.hexFind.BuiltInContextMenu.CutMenuItemImage = global::Lite.HexEditor.images.CutHS;
             this.hexFind.BuiltInContextMenu.CutMenuItemText = resources.GetString("hexFind.BuiltInContextMenu.CutMenuItemText");
-            this.hexFind.BuiltInContextMenu.PasteMenuItemImage = global::Be.HexEditor.images.PasteHS;
+            this.hexFind.BuiltInContextMenu.PasteMenuItemImage = global::Lite.HexEditor.images.PasteHS;
             this.hexFind.BuiltInContextMenu.PasteMenuItemText = resources.GetString("hexFind.BuiltInContextMenu.PasteMenuItemText");
             this.hexFind.BuiltInContextMenu.SelectAllMenuItemText = resources.GetString("hexFind.BuiltInContextMenu.SelectAllMenuItemText");
             this.hexFind.InfoForeColor = System.Drawing.Color.Empty;

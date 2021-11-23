@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Be.HexEditor {
+namespace Lite.HexEditor {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Be.HexEditor {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Be.HexEditor.ScalingImages", typeof(ScalingImages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Lite.HexEditor.ScalingImages", typeof(ScalingImages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

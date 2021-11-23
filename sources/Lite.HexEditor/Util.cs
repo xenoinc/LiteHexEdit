@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 
-namespace Be.HexEditor
+namespace Lite.HexEditor
 {
     static class Util
     {

@@ -421,7 +421,7 @@
     <value>hexFind</value>
   </data>
   <data name="&gt;&gt;hexFind.Type" xml:space="preserve">
-    <value>Be.Windows.Forms.HexBox, Be.Windows.Forms.HexBox, Version=1.5.0.25652, Culture=neutral, PublicKeyToken=e0e5adf0ebc99863</value>
+    <value>Lite.Windows.Forms.HexBox, Lite.Windows.Forms.HexBox, Version=1.5.0.25652, Culture=neutral, PublicKeyToken=e0e5adf0ebc99863</value>
   </data>
   <data name="&gt;&gt;hexFind.Parent" xml:space="preserve">
     <value>$this</value>
@@ -547,6 +547,6 @@
     <value>FormFind</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Be.HexEditor.Core.FormEx, Be.HexEditor, Version=1.5.0.25668, Culture=neutral, PublicKeyToken=01fb039ca8b8c445</value>
+    <value>Lite.HexEditor.Core.FormEx, Lite.HexEditor, Version=1.5.0.25668, Culture=neutral, PublicKeyToken=01fb039ca8b8c445</value>
   </data>
 </root>

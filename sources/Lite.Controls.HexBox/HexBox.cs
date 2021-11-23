@@ -8,7 +8,7 @@ using System.Windows.Forms.VisualStyles;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
 	/// <summary>
 	/// Represents a hex box control.

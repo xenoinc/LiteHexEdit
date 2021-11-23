@@ -1,6 +1,6 @@
 using System;
 
-namespace Be.Windows.Forms
+namespace Lite.Windows.Forms
 {
     internal abstract class DataBlock
     {
