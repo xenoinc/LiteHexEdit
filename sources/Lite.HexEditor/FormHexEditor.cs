@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Lite.Windows.Forms;
+using Lite.Windows.Forms.Converters;
 
 namespace Lite.HexEditor
 {
@@ -34,8 +35,7 @@ namespace Lite.HexEditor
       if (e.ToolStrip.GetType() != typeof(ToolStrip))
         return;
 
-      e.Graphics.DrawLine(new Pen(new SolidBrush(SystemColors.Control)), new Point(toolStrip.Width - 1, 0),
-        new Point(toolStrip.Width - 1, toolStrip.Height));
+      e.Graphics.DrawLine(new Pen(new SolidBrush(SystemColors.Control)), new Point(toolStrip.Width - 1, 0), new Point(toolStrip.Width - 1, toolStrip.Height));
     }
 
     /// <summary>
