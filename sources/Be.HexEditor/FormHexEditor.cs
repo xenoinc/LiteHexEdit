@@ -61,14 +61,15 @@ namespace Be.HexEditor
 			miDefault.Tag = defConverter;
 			miDefault.Click += new EventHandler(encodingMenuItem_Clicked);
 
-			var ebcdicConverter = new EbcdicByteCharProvider();
-			ToolStripMenuItem miEbcdic = new ToolStripMenuItem();
-			miEbcdic.Text = ebcdicConverter.ToString();
-			miEbcdic.Tag = ebcdicConverter;
+            var altConverter = new UtfByteCharProvider();
+            ////var converter = new EbcdicByteCharProvider();
+            ToolStripMenuItem miEbcdic = new ToolStripMenuItem();
+			miEbcdic.Text = altConverter.ToString();
+			miEbcdic.Tag = altConverter;
 			miEbcdic.Click += new EventHandler(encodingMenuItem_Clicked);
 
 			encodingToolStripComboBox.Items.Add(defConverter);
-			encodingToolStripComboBox.Items.Add(ebcdicConverter);
+			encodingToolStripComboBox.Items.Add(altConverter);
 
 			encodingToolStripMenuItem.DropDownItems.Add(miDefault);
 			encodingToolStripMenuItem.DropDownItems.Add(miEbcdic);
