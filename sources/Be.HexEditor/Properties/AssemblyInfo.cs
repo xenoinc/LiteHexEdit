@@ -1,23 +1,20 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Resources;
+using System.Runtime.InteropServices;
 
 //
-// General Information about an assembly is controlled through the following 
+// General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("Be.HexEditor")]
+[assembly: AssemblyTitle("Lite.HexEdit")]
 [assembly: AssemblyDescription("View and edit files in hex format")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Be")]
-[assembly: AssemblyProduct("Be.HexEditor")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCompany("Xeno Innovations")]
+[assembly: AssemblyProduct("Lite.HexEdit")]
+[assembly: AssemblyCopyright("Xeno Innovations, Inc.")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]		
-
+[assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("2.0.0")]
-
 [assembly: ComVisible(false)]
 [assembly: NeutralResourcesLanguage("en-US")]

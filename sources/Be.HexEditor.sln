@@ -1,8 +1,17 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Be.HexEditor", "Be.HexEditor\Be.HexEditor.csproj", "{FF4ADB46-210E-429E-9176-68613F5CBE90}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lite.HexEdit", "Be.HexEditor\Lite.HexEdit.csproj", "{FF4ADB46-210E-429E-9176-68613F5CBE90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Be.Windows.Forms.HexBox", "Be.Windows.Forms.HexBox\Be.Windows.Forms.HexBox.csproj", "{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lite.Controls.HexBox", "Be.Windows.Forms.HexBox\Lite.Controls.HexBox.csproj", "{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D3079354-201C-4EBE-9EBB-D4E34D673661}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		..\license.txt = ..\license.txt
+		..\readme.md = ..\readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A8AAD176-7695-4137-BDD3-538CD4B956EC}
 	EndGlobalSection
 EndGlobal

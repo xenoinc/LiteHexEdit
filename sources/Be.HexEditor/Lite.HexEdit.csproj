@@ -168,7 +168,7 @@
     <EmbeddedResource Include="Images\Logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Be.Windows.Forms.HexBox\Be.Windows.Forms.HexBox.csproj" />
+    <ProjectReference Include="..\Be.Windows.Forms.HexBox\Lite.Controls.HexBox.csproj" />
   </ItemGroup>
   <PropertyGroup />
   <ItemGroup>
