@@ -46,10 +46,8 @@ namespace Lite.HexEditor
 
     public FindOptions FindOptions
     {
-      get
-      {
-        return _findOptions;
-      }
+      get => _findOptions;
+      
       set
       {
         _findOptions = value;
@@ -84,7 +82,7 @@ namespace Lite.HexEditor
       }
       else // something was found
       {
-        this.Close();
+        Close();
 
         Application.DoEvents();
 

@@ -276,13 +276,6 @@ namespace Lite.HexEditor.Core
       return os.Version.Major + ((double)os.Version.Minor / 10);
     }
 
-    // Check if OS is Windows 8.1 or newer.
-    private bool IsWin81OrNewer()
-    {
-      // To get this value correctly, it is required to include ID of Windows 8.1 in the manifest file.
-      return (6.3 <= GetVersion());
-    }
-
     // Check if current location of this window is good for delayed adjustment.
     private bool IsLocationGood()
     {
@@ -315,6 +308,13 @@ namespace Lite.HexEditor.Core
       }
 
       return false;
+    }
+
+    // Check if OS is Windows 8.1 or newer.
+    private bool IsWin81OrNewer()
+    {
+      // To get this value correctly, it is required to include ID of Windows 8.1 in the manifest file.
+      return (6.3 <= GetVersion());
     }
 
     private void MainForm_Load(object sender, EventArgs e)

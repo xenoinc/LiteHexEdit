@@ -1,36 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace Lite.HexEditor.Core
 {
-    public class ToolStripMenuItemEx : ToolStripMenuItem, IScalingItem
+  public class ToolStripMenuItemEx : ToolStripMenuItem, IScalingItem
+  {
+    private System.Drawing.Image _image16;
+    private System.Drawing.Image _image24;
+    private System.Drawing.Image _image32;
+
+    [DefaultValue(null)]
+    public System.Drawing.Image Image16
     {
-        System.Drawing.Image _image16;
-        [DefaultValue(null)]
-        public System.Drawing.Image Image16
-        {
-            get { return _image16; }
-            set { _image16 = value; }
-        }
-
-        System.Drawing.Image _image24;
-        [DefaultValue(null)]
-        public System.Drawing.Image Image24
-        {
-            get { return _image24; }
-            set { _image24 = value; }
-        }
-
-        System.Drawing.Image _image32;
-        [DefaultValue(null)]
-        public System.Drawing.Image Image32
-        {
-            get { return _image32; }
-            set { _image32 = value; }
-        }
+      get => _image16;
+      set => _image16 = value;
     }
+
+    [DefaultValue(null)]
+    public System.Drawing.Image Image24
+    {
+      get => _image24;
+      set => _image24 = value;
+    }
+
+    [DefaultValue(null)]
+    public System.Drawing.Image Image32
+    {
+      get => _image32;
+      set => _image32 = value;
+    }
+  }
 }
