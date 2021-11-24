@@ -59,7 +59,7 @@ namespace Lite.HexEditor
 
     public bool UseSystemLanguage
     {
-      get =>_useSystemLanguage;
+      get => _useSystemLanguage;
       set => _useSystemLanguage = value;
     }
 
