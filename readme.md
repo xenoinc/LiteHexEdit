@@ -1,12 +1,12 @@
 # Lite Hex Edit
 
-Lite Hex Editor - _Lite.HexEditor_ - is a simple and easy to use binary file viewer and byte number decoder for Windows OS.
+Lite Hex Editor - _Lite.HexEditor_ - is a simple and easy to use binary file viewer and byte number decoder for Windows OS. If you're wondering, yes, it opens a GB-sized file in the blink of an eye.
 
-![screenshot](documentation\screenshot.png)
+![screenshot](documentation\screenshot-4gb.png)
 
 ## Nastalgia Time
 
-This project is a revitalization of one of my favorite hex editors, [Lite.HexEditor](https://sourceforge.net/p/hexbox/) by Bernhard Elbl. This version is an upgrade from .NET Framework 4 to .NET 6.
+This project is a revitalization of one of my favorite hex editors, [Lite.HexEditor](https://sourceforge.net/p/hexbox/) by Bernhard Elbl. Back when Hex Editors were at a premium cost, this FOSS tool was here to save the day.
 
 ## Current Features
 
@@ -19,9 +19,15 @@ This project is a revitalization of one of my favorite hex editors, [Lite.HexEdi
 
 ## Future Proposals
 
-* Tabbed windows
-* Multi-platform
-* Support more encodings
+| Feature | Phase
+|-|-|-|
+| Multi-tabbed windows      | vNext
+| Multi-platform            | Considering
+| Support more encodings    | Needs info
+| Undo button | Planning
+| Sidebar byte counter to support beyond 4 GB files (`0xFFFFFFFF`) | Planning
+| Hex calculator | Planning
+| Customize display bytes; currently only 16 wide | Planning
 
 ## Building the Code
 

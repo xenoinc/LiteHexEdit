@@ -1,62 +1,75 @@
 using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace Lite.HexEditor
 {
-	/// <summary>
-	/// Summary description for FormGoTo.
-	/// </summary>
-    public class FormGoTo : Core.FormEx
-	{
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Button btnCancel;
-		private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.NumericUpDown nup;
-		private System.Windows.Forms.Label label2;
-        private Panel line;
-        private FlowLayoutPanel flowLayoutPanel1;
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+  /// <summary>Summary description for FormGoTo.</summary>
+  public class FormGoTo : Core.FormEx
+  {
+    private System.Windows.Forms.Button btnCancel;
+    private System.Windows.Forms.Button btnOK;
 
-		public FormGoTo()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
+    /// <summary>
+    /// Required designer variable.
+    /// </summary>
+    private System.ComponentModel.Container components = null;
 
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
-		}
+    private FlowLayoutPanel flowLayoutPanel1;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Label label2;
+    private Panel line;
+    private System.Windows.Forms.NumericUpDown nup;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if(components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+    public FormGoTo()
+    {
+      //
+      // Required for Windows Form Designer support
+      //
+      InitializeComponent();
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+      //
+      // TODO: Add any constructor code after InitializeComponent call
+      //
+    }
+
+    public long GetByteIndex()
+    {
+      return Convert.ToInt64(nup.Value) - 1;
+    }
+
+    public void SetDefaultValue(long byteIndex)
+    {
+      nup.Value = byteIndex + 1;
+    }
+
+    public void SetMaxByteIndex(long maxByteIndex)
+    {
+      nup.Maximum = maxByteIndex + 1;
+    }
+
+    /// <summary>
+    /// Clean up any resources being used.
+    /// </summary>
+    protected override void Dispose(bool disposing)
+    {
+      if (disposing)
+      {
+        if (components != null)
+        {
+          components.Dispose();
+        }
+      }
+      base.Dispose(disposing);
+    }
+
+    #region Windows Form Designer generated code
+
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGoTo));
             this.label1 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -143,38 +156,29 @@ namespace Lite.HexEditor
             this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
-		}
-		#endregion
+    }
 
-		public void SetDefaultValue(long byteIndex)
-		{
-			nup.Value = byteIndex + 1;
-		}
+    #endregion Windows Form Designer generated code
 
-		public void SetMaxByteIndex(long maxByteIndex)
-		{
-			nup.Maximum = maxByteIndex + 1;
-		}
+    private void btnCancel_Click(object sender, System.EventArgs e)
+    {
+      DialogResult = DialogResult.OK;
+    }
 
-		public long GetByteIndex()
-		{
-			return Convert.ToInt64(nup.Value) - 1;
-		}
+    private void btnOK_Click(object sender, System.EventArgs e)
+    {
+      DialogResult = DialogResult.OK;
+    }
 
-		private void FormGoTo_Activated(object sender, System.EventArgs e)
-		{
-			nup.Focus();
-			nup.Select(0, nup.Value.ToString().Length);
-		}
+    private void FormGoTo_Activated(object sender, System.EventArgs e)
+    {
+      nup.Focus();
+      nup.Select(0, nup.Value.ToString().Length);
+    }
 
-		private void btnOK_Click(object sender, System.EventArgs e)
-		{
-			DialogResult = DialogResult.OK;
-		}
+    private void FormGoTo_Load(object sender, EventArgs e)
+    {
 
-		private void btnCancel_Click(object sender, System.EventArgs e)
-		{
-			DialogResult = DialogResult.OK;
-		}
-	}
+    }
+  }
 }

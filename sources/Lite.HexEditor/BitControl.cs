@@ -8,17 +8,10 @@ namespace Lite.HexEditor
 {
   public partial class BitControl : UserControl
   {
+    private BitInfo _bitInfo;
     private Panel _innerBorderHeaderPanel;
     private Panel _innerBorderPanel;
     private List<RichTextBox> _txtBits = new List<RichTextBox>();
-
-    public event EventHandler BitChanged;
-
-    protected virtual void OnBitChanged(EventArgs e)
-    {
-      if (BitChanged != null)
-        BitChanged(this, e);
-    }
 
     public BitControl()
     {
@@ -44,9 +37,9 @@ namespace Lite.HexEditor
       {
         Label lbl = new Label();
         lbl.Tag = i;
-        lbl.BorderStyle = System.Windows.Forms.BorderStyle.None;
-        lbl.Font = new System.Drawing.Font("Consolas", SystemFonts.MessageBoxFont.Size, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        lbl.Margin = new System.Windows.Forms.Padding(0);
+        lbl.BorderStyle = BorderStyle.None;
+        lbl.Font = new Font("Consolas", SystemFonts.MessageBoxFont.Size, FontStyle.Regular, GraphicsUnit.Point, 0);
+        lbl.Margin = new Padding(0);
 
         lbl.Name = "lbl" + i.ToString();
 
@@ -54,8 +47,8 @@ namespace Lite.HexEditor
 
         lbl.AutoSize = true;
         lbl.Text = i.ToString();
-        lbl.Enter += new System.EventHandler(this.txt_Enter);
-        lbl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown);
+        lbl.Enter += new EventHandler(txt_Enter);
+        lbl.KeyDown += new KeyEventHandler(txt_KeyDown);
         _innerBorderHeaderPanel.Controls.Add(lbl);
 
         if (first)
@@ -77,14 +70,13 @@ namespace Lite.HexEditor
       {
         RichTextBox txt = new RichTextBox();
         txt.Tag = i;
-        txt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-        txt.Font = new System.Drawing.Font("Consolas", SystemFonts.MessageBoxFont.Size, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        txt.Margin = new System.Windows.Forms.Padding(0);
+        txt.BorderStyle = BorderStyle.None;
+        txt.Font = new Font("Consolas", SystemFonts.MessageBoxFont.Size, FontStyle.Regular, GraphicsUnit.Point, 0);
+        txt.Margin = new Padding(0);
 
         txt.MaxLength = 1;
         txt.Multiline = false;
         txt.Name = "txt" + i.ToString();
-        //txt.Size = new System.Drawing.Size(14, 14);
         txt.Size = size;
         txt.Left = pos;
         txt.Top = 6;
@@ -92,21 +84,23 @@ namespace Lite.HexEditor
         txt.TabIndex = 10 - i + 7;
         txt.Text = "0";
         txt.Visible = false;
-        txt.SelectionChanged += new System.EventHandler(this.txt_SelectionChanged);
-        txt.Enter += new System.EventHandler(this.txt_Enter);
-        txt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown);
+        txt.SelectionChanged += new EventHandler(this.txt_SelectionChanged);
+        txt.Enter += new EventHandler(this.txt_Enter);
+        txt.KeyDown += new KeyEventHandler(this.txt_KeyDown);
+
         _innerBorderPanel.Controls.Add(txt);
         _txtBits.Add(txt);
       }
+
       UpdateView();
     }
 
-    private BitInfo _bitInfo;
+    public event EventHandler BitChanged;
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public BitInfo BitInfo
     {
-      get { return _bitInfo; }
+      get => _bitInfo;
       set
       {
         _bitInfo = value;
@@ -114,87 +108,27 @@ namespace Lite.HexEditor
       }
     }
 
-    private void UpdateView()
+    protected virtual void OnBitChanged(EventArgs e)
     {
-      foreach (var txt in _txtBits)
-        txt.TextChanged -= new EventHandler(txt_TextChanged);
-
-      if (_bitInfo == null)
-      {
-        foreach (var txt in _txtBits)
-        {
-          txt.Text = string.Empty;
-        }
-        pnBitsEditor.Visible = lblValue.Visible = lblBit.Visible = pnBitsHeader.Visible = false;
-
-        return;
-      }
-      else
-      {
-        foreach (var txt in _txtBits)
-          txt.Visible = true;
-        pnBitsEditor.Visible = lblValue.Visible = lblBit.Visible = pnBitsHeader.Visible = true;
-      }
-
-      foreach (var txt in _txtBits)
-      {
-        int bit = (int)txt.Tag;
-        txt.Text = _bitInfo.GetBitAsString(bit);
-      }
-
-      foreach (var txt in _txtBits)
-        txt.TextChanged += new EventHandler(txt_TextChanged);
+      BitChanged?.Invoke(this, e);
     }
 
-    private int GetBitSetInt(byte b, int pos)
+    private int IsBitSetAsInt(byte b, int pos)
     {
-      if (IsBitSet(b, pos))
-        return 1;
-      else
-        return 0;
+      return IsBitSet(b, pos) ? 1 : 0;
     }
 
-    private bool IsBitSet(byte b, int pos)
-    {
-      return (b & (1 << pos)) != 0;
-    }
-
-    private byte SetBit(byte b, int BitNumber)
-    {
-      //Kleine Fehlerbehandlung
-      if (BitNumber < 8 && BitNumber > -1)
-      {
-        return (byte)(b | (byte)(0x01 << BitNumber));
-      }
-      else
-      {
-        throw new InvalidOperationException(
-        "Der Wert für BitNumber " + BitNumber.ToString() + " war nicht im zulässigen Bereich! (BitNumber = (min)0 - (max)7)");
-      }
-    }
-
-    private void txt_TextChanged(object sender, EventArgs e)
-    {
-      var txt = (RichTextBox)sender;
-      var index = (int)txt.Tag;
-      var value = txt.Text != "0";
-      this.BitInfo[index] = value;
-      OnBitChanged(EventArgs.Empty);
-
-      NavigateRight((RichTextBox)sender);
-    }
+    private bool IsBitSet(byte b, int pos) => (b & (1 << pos)) != 0;
 
     private void NavigateLeft(RichTextBox txt)
     {
       var indexOf = _txtBits.IndexOf(txt);
-
       NavigateTo(indexOf - 1);
     }
 
     private void NavigateRight(RichTextBox txt)
     {
       var indexOf = _txtBits.IndexOf(txt);
-
       NavigateTo(indexOf + 1);
     }
 
@@ -220,11 +154,31 @@ namespace Lite.HexEditor
       selectBox.Focus();
     }
 
+    private byte SetBit(byte b, int BitNumber)
+    {
+      // Kleine Fehlerbehandlung (small error handling)
+      if (BitNumber < 8 && BitNumber > -1)
+      {
+        return (byte)(b | (byte)(0x01 << BitNumber));
+      }
+      else
+      {
+        throw new InvalidOperationException($"The value for {BitNumber} was not in the permissible range. (BitNumber = (min)0 - (max)7)");
+        //// "Der Wert für BitNumber " + BitNumber.ToString() + " war nicht im zulässigen Bereich! (BitNumber = (min)0 - (max)7)");
+      }
+    }
+
+    private void txt_Enter(object sender, EventArgs e)
+    {
+      var txt = (RichTextBox)sender;
+      UpdateSelection(txt);
+    }
+
     private void txt_KeyDown(object sender, KeyEventArgs e)
     {
       var txt = (RichTextBox)sender;
 
-      List<Keys> bitKeys = new List<Keys>() { Keys.D0, Keys.D1 };
+      List<Keys> bitKeys = new() { Keys.D0, Keys.D1 };
 
       var txt7 = _txtBits[0];
       if (txt7.SelectionLength > 1)
@@ -264,6 +218,17 @@ namespace Lite.HexEditor
       UpdateSelection(txt);
     }
 
+    private void txt_TextChanged(object sender, EventArgs e)
+    {
+      var txt = (RichTextBox)sender;
+      var index = (int)txt.Tag;
+      var value = txt.Text != "0";
+      this.BitInfo[index] = value;
+      OnBitChanged(EventArgs.Empty);
+
+      NavigateRight((RichTextBox)sender);
+    }
+
     private void UpdateSelection(RichTextBox txt)
     {
       txt.SelectionStart = 0;
@@ -271,10 +236,36 @@ namespace Lite.HexEditor
         txt.SelectionLength = 1;
     }
 
-    private void txt_Enter(object sender, EventArgs e)
+    private void UpdateView()
     {
-      var txt = (RichTextBox)sender;
-      UpdateSelection(txt);
+      foreach (var txt in _txtBits)
+        txt.TextChanged -= new EventHandler(txt_TextChanged);
+
+      if (_bitInfo == null)
+      {
+        foreach (var txt in _txtBits)
+          txt.Text = string.Empty;
+
+        pnBitsEditor.Visible = lblValue.Visible = lblBit.Visible = pnBitsHeader.Visible = false;
+
+        return;
+      }
+      else
+      {
+        foreach (var txt in _txtBits)
+          txt.Visible = true;
+
+        pnBitsEditor.Visible = lblValue.Visible = lblBit.Visible = pnBitsHeader.Visible = true;
+      }
+
+      foreach (var txt in _txtBits)
+      {
+        int bit = (int)txt.Tag;
+        txt.Text = _bitInfo.GetBitAsString(bit);
+      }
+
+      foreach (var txt in _txtBits)
+        txt.TextChanged += new EventHandler(txt_TextChanged);
     }
   }
 }
