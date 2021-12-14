@@ -28,7 +28,7 @@ This project is a revitalization of one of my favorite hex editors, [Be.HexEdito
 | Sidebar byte counter to support beyond 4 GB files (`0xFFFFFFFF`) | Planning
 | Hex calculator            | Planning
 | Multi-platform            | Considering
-
+| Move HexBox to NuGet (WinForms, [WPF](https://github.com/takhlaq/Be.HexEditor/blob/master/sources/Be.Windows.Forms.HexBox/WpfHexBox.xaml.cs)) | Planning
 
 ## Building the Code
 
