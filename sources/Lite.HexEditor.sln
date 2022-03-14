@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CodeMaid.config = CodeMaid.config
 		..\license.txt = ..\license.txt
 		..\readme.md = ..\readme.md
+		StyleCop.Analyzers.ruleset = StyleCop.Analyzers.ruleset
+		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lite.HexEditor", "Lite.HexEditor\Lite.HexEditor.csproj", "{38301E46-D16C-42DD-B4EC-5E7534EAA55B}"

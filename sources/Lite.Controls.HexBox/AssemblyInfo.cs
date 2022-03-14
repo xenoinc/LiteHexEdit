@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -50,12 +50,11 @@ using System.Runtime.InteropServices;
 //
 [assembly: AssemblyDelaySign(false)]
 
-//[assembly: AssemblyKeyFile("../../HexBox.snk")]
-//[assembly: AssemblyKeyName("")]
-
-//[assembly:IsolatedStorageFilePermission(SecurityAction.RequestRefuse, UserQuota=1048576)]
-//[assembly:SecurityPermission(SecurityAction.RequestRefuse, UnmanagedCode=true)]
-//[assembly:FileIOPermission(SecurityAction.RequestOptional, Unrestricted=true)]
+////[assembly: AssemblyKeyFile("../../HexBox.snk")]
+////[assembly: AssemblyKeyName("")]
+////[assembly:IsolatedStorageFilePermission(SecurityAction.RequestRefuse, UserQuota=1048576)]
+////[assembly:SecurityPermission(SecurityAction.RequestRefuse, UnmanagedCode=true)]
+////[assembly:FileIOPermission(SecurityAction.RequestOptional, Unrestricted=true)]
 
 [assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
