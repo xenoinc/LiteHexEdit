@@ -4,9 +4,9 @@ Lite Hex Editor - _Lite.HexEditor_ - is a simple and easy to use binary file vie
 
 ![screenshot](documentation/screenshot-4gb.png)
 
-## Nastalgia Time
+## Requirements
 
-This project is a revitalization of one of my favorite hex editors, [Be.HexEditor](https://sourceforge.net/p/hexbox/) by Bernhard Elbl. Back when Hex Editors were at a premium cost, this FOSS tool was here to save the day.
+* .NET 10
 
 ## Current Features
 
@@ -29,10 +29,13 @@ This project is a revitalization of one of my favorite hex editors, [Be.HexEdito
 | Hex calculator            | Planning
 | Multi-platform            | Considering
 
-
 ## Building the Code
 
 The requirements are simple:
 
 * Visual Studio 2022
 * Windos OS 8, 10, and 11
+
+## Nastalgia Time
+
+This project is a revitalization of one of my favorite hex editors, [Be.HexEditor](https://sourceforge.net/p/hexbox/) by Bernhard Elbl. Back when Hex Editors were at a premium cost, this FOSS tool was here to save the day.
