@@ -103,6 +103,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <Title>Lite Hex Editor</Title>
+    <AssemblyVersion>2.1.0</AssemblyVersion>
+    <FileVersion>2.1.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Update="System">
