@@ -1,8 +1,11 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
 
 using Lite.Windows.Forms;
+
+[assembly: SuppressMessage("Style", "IDE1006:Naming Styles")]
 
 namespace Lite.HexEditor
 {
@@ -44,6 +47,7 @@ namespace Lite.HexEditor
       rbHex.CheckedChanged += new EventHandler(rb_CheckedChanged);
     }
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public FindOptions FindOptions
     {
       get => _findOptions;
@@ -55,6 +59,7 @@ namespace Lite.HexEditor
       }
     }
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public HexBox HexBox { get; set; }
 
     public void FindNext()

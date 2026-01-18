@@ -3,6 +3,7 @@ using System.Data;
 using System.Globalization;
 using System.Windows.Forms;
 using Lite.HexEditor.Properties;
+using System.ComponentModel;
 
 namespace Lite.HexEditor
 {
@@ -42,6 +43,7 @@ namespace Lite.HexEditor
         languageComboBox.SelectedIndex = 0;
     }
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public int RecentFilesMax
     {
       get => _recentFilesMax;
@@ -57,6 +59,7 @@ namespace Lite.HexEditor
       }
     }
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool UseSystemLanguage
     {
       get => _useSystemLanguage;
