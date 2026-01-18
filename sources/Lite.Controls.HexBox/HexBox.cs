@@ -3335,6 +3335,7 @@ namespace Lite.Windows.Forms
     ///   Default alpha = 100
     /// </remarks>
     [Category("Hex"), Description("Gets or sets the color of the shadow selection.")]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public Color ShadowSelectionColor
     {
       get => _shadowSelectionColor;

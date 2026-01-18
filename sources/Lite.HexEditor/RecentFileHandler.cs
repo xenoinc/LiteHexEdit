@@ -13,17 +13,18 @@ namespace Lite.HexEditor
     {
         public class FileMenuItem : ToolStripMenuItem
         {
-            string fileName;
+            string _fileName;
 
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public string FileName
             {
-                get { return fileName; }
-                set { fileName = value; }
+                get { return _fileName; }
+                set { _fileName = value; }
             }
 
             public FileMenuItem(string fileName)
             {
-                this.fileName = fileName;
+                this._fileName = fileName;
             }
 
             public override string Text
@@ -32,7 +33,7 @@ namespace Lite.HexEditor
                 {
                     ToolStripMenuItem parent = (ToolStripMenuItem)this.OwnerItem;
                     int index = parent.DropDownItems.IndexOf(this);
-                    return string.Format("{0} {1}", index+1, fileName);
+                    return string.Format("{0} {1}", index+1, _fileName);
                 }
                 set
                 {
@@ -65,7 +66,7 @@ namespace Lite.HexEditor
 
         public void AddFile(string fileName)
         {
-            if (this.recentFileToolStripItem == null)
+            if (this._recentFileToolStripItem == null)
                 throw new OperationCanceledException("recentFileToolStripItem can not be null!");
 
             // check if the file is already in the collection
@@ -73,8 +74,8 @@ namespace Lite.HexEditor
             if (alreadyIn > 0) // remove it
             {
                 Settings.Default.RecentFiles.RemoveAt(alreadyIn);
-                if(recentFileToolStripItem.DropDownItems.Count > alreadyIn)
-                    recentFileToolStripItem.DropDownItems.RemoveAt(alreadyIn);
+                if(_recentFileToolStripItem.DropDownItems.Count > alreadyIn)
+                    _recentFileToolStripItem.DropDownItems.RemoveAt(alreadyIn);
             }
             else if (alreadyIn == 0) // it´s the latest file so return
             {
@@ -83,17 +84,17 @@ namespace Lite.HexEditor
 
             // insert the file on top of the list
             Settings.Default.RecentFiles.Insert(0, fileName);
-            recentFileToolStripItem.DropDownItems.Insert(0, new FileMenuItem(fileName));
+            _recentFileToolStripItem.DropDownItems.Insert(0, new FileMenuItem(fileName));
 
             // remove the last one, if max size is reached
             if (Settings.Default.RecentFiles.Count > MaxRecentFiles)
                 Settings.Default.RecentFiles.RemoveAt(MaxRecentFiles);
             if (Settings.Default.RecentFiles.Count > Settings.Default.RecentFilesMax)
-                this.recentFileToolStripItem.DropDownItems.RemoveAt(Settings.Default.RecentFilesMax);
+                this._recentFileToolStripItem.DropDownItems.RemoveAt(Settings.Default.RecentFilesMax);
 
             // enable the menu item if it´s disabled
-            if (!recentFileToolStripItem.Enabled)
-                recentFileToolStripItem.Enabled = true;
+            if (!_recentFileToolStripItem.Enabled)
+                _recentFileToolStripItem.Enabled = true;
 
             // save the changes
             Settings.Default.Save();
@@ -112,17 +113,18 @@ namespace Lite.HexEditor
             return -1;
         }
 
-        ToolStripMenuItem recentFileToolStripItem;
+        ToolStripMenuItem _recentFileToolStripItem;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ToolStripMenuItem RecentFileToolStripItem
         {
-            get { return recentFileToolStripItem; }
+            get { return _recentFileToolStripItem; }
             set 
             {
-                if (recentFileToolStripItem == value)
+                if (_recentFileToolStripItem == value)
                     return;
 
-                recentFileToolStripItem = value;
+                _recentFileToolStripItem = value;
 
                 ReCreateItems();
             }
@@ -138,20 +140,20 @@ namespace Lite.HexEditor
 
         void ReCreateItems()
         {
-            if (recentFileToolStripItem == null)
+            if (_recentFileToolStripItem == null)
                 return;
 
             if (Settings.Default.RecentFiles == null)
                 Settings.Default.RecentFiles = new StringCollection();
 
-            recentFileToolStripItem.DropDownItems.Clear();
-            recentFileToolStripItem.Enabled = (Settings.Default.RecentFiles.Count > 0);
+            _recentFileToolStripItem.DropDownItems.Clear();
+            _recentFileToolStripItem.Enabled = (Settings.Default.RecentFiles.Count > 0);
 
             int fileItemCount = Math.Min(Settings.Default.RecentFilesMax, Settings.Default.RecentFiles.Count);
             for(int i = 0; i < fileItemCount; i++)
             {
                 string file = Settings.Default.RecentFiles[i];
-                recentFileToolStripItem.DropDownItems.Add(new FileMenuItem(file));
+                _recentFileToolStripItem.DropDownItems.Add(new FileMenuItem(file));
             }
         }
 
