@@ -1,4 +1,4 @@
-# Copyright 2021 Xeno Innovations, Inc
+# Copyright 2021-2026 Xeno Innovations, Inc
 
 # Generic Visual Studio files
 *.bak
@@ -20,6 +20,9 @@
 *.sln.docstates
 *.autorecover
 *.coverage
+*.zip
+*.exe
+*.dll
 
 # SQLite datbases
 *.db3
@@ -31,6 +34,7 @@
 **/Droid/**/[Rr]esource.[Dd]esigner.cs
 
 # Build results
+/[Pp]ublish
 [Oo]utput/
 [Dd]ebug/
 [Dd]ebugPublic/
